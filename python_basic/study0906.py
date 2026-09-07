@@ -144,3 +144,87 @@ print(student["name"])          # 출력: 미미
 print(student.get("age"))       # 출력: None (에러 없이 안전하게 처리, "age" 서랍이 없음)
 print(student.get("age", 20))   # 출력: 20 (없을 때 기본값 지정 가능)
 print(student) # age가 추가되진 않음
+
+# .keys() - 딕셔너리.key(), 모든 키 값 확인하기
+student = {"name": "미미", "job": "AI서비스개발자"}
+print(student.keys())
+# 출력: dict_keys(['name', 'job'])
+
+# .values() - 딕셔너리.values(), 모든 value 값 확인하기
+print(student.values())
+# 출력: dict_values(['name', 'job'])
+
+# .items() - for key, value in 딕셔너리.items():    - key와 value를 짝을 지어 순회하기
+profile = {"이름": "미미", "취미": "개발"}
+for key, value in profile.items():    
+    print(f"{key} : {value}")   
+# 이름 : 미미 
+# 취미 : 개발
+
+# .update() - 딕셔너리.update({key : value})   - 기존 내용을 수정하거나 추가하기
+profile = {"이름": "미미", "취미": "개발"}
+profile.update({"취미": "게임", "나이": 20})
+print(profile)
+# {'이름': '미미', '취미': '게임', '나이': 20}
+
+# 중첩 딕셔너리(Nested Dictionary) 다루기 - AI API가 돌려주는 JSON 응답이 보통 중첩 구조
+# 딕셔너리["key1"]["key2"]
+response = {    
+            "id": "fseraf-1012u12",   
+            "choices": [ 
+                { "message": { "role": "assistant", "content": "안녕하세요! 무엇을 도와드릴까요?"  } } 
+                ]
+            } 
+# 딕셔너리 안 리스트, 리스트 안 딕셔너리를 순서대로 열어 답변만 꺼낸다.
+answer = response["choices"][0]["message"]["content"]
+print(answer)  # 안녕하세요! 무엇을 도와드릴까요?
+
+print()
+
+# 소문자 대문자 바꾸기
+word = "Learn Python"
+result = ""
+for i in word:
+    if i.isupper():
+        result += i.lower()
+    elif i.islower():
+        result += i.upper()
+    else:
+        result += i
+print(result) # lEARN pYTHON
+
+print()
+
+# 두 딕셔너리 병합하기
+# menu1을 기준으로 menu2의 내용을 합쳐 - (겹치는 키 "샌드위치"는 menu2의 값으로 덮어써서) 
+# 하나의 딕셔너리로 만들고, 그 결과를 items()로 반복하며 "메뉴명: 가격" 형태로 한 줄씩 출력하세요
+menu1 = {"커피": 7000, "샌드위치": 9500}
+menu2 = {"샌드위치": 8000, "쿠키": 4000}
+menu1.update(menu2)
+
+for name,price in menu1.items():
+    print(f"새로 바뀐 메뉴 {name}:{price}")
+print()
+print(menu1) # 샌드위치 값이 변함
+print()
+print(menu2)
+
+print()
+
+# 단어별 등장 횟수 세기 (빈도수 계산하기)
+# text를 단어 단위로 나눈 뒤, 각 단어가 몇 번씩 등장하는지 딕셔너리 형태로 만들어 출력하세요.
+text = "cherry apple banana apple cherry banana apple apple banana"
+
+# 1. count 딕셔너리 생성
+count = {}
+# 2. 공백을 기준으로 words 리스트 생성
+words = text.split()
+# 3. 단어별 횟수를 셈
+for fruits in words:
+    if fruits in count:
+        count[fruits] = count[fruits] + 1
+    else:
+        count[fruits] = 1
+
+# 4. count 딕셔너리 출력
+print(count)  # {'cherry': 2, 'apple': 4, 'banana': 3}
